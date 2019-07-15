@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -38,10 +39,18 @@ func handleRequests() {
 	myRouter.HandleFunc("/", homePage)
 	myRouter.HandleFunc("/all", returnAllArticles)
 	myRouter.HandleFunc("/article/{id}", returnSingleArticle)
+	myRouter.HandleFunc("/article", createNewArticle).Methods("POST")
 	// finally, instead of passing in nil, we want
 	// to pass in our newly created router as the second
 	// argument
 	log.Fatal(http.ListenAndServe(":10000", myRouter))
+}
+
+func createNewArticle(w http.ResponseWriter, r *http.Request) {
+	// get the body of our POST request
+	// return the string response containing the request body
+	reqBody, _ := ioutil.ReadAll(r.Body)
+	fmt.Fprintf(w, "%+v", string(reqBody))
 }
 
 func returnSingleArticle(w http.ResponseWriter, r *http.Request) {
