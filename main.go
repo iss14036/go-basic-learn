@@ -38,9 +38,10 @@ func handleRequests() {
 	// replace http.HandleFunc with myRouter.HandleFunc
 	myRouter.HandleFunc("/", homePage)
 	myRouter.HandleFunc("/all", returnAllArticles)
-	myRouter.HandleFunc("/article/{id}", returnSingleArticle)
+	myRouter.HandleFunc("/article/{id}", returnSingleArticle).Methods("GET")
 	myRouter.HandleFunc("/article", createNewArticle).Methods("POST")
 	myRouter.HandleFunc("/article/{id}", deleteArticle).Methods("DELETE")
+	myRouter.HandleFunc("/article/{id}", updateSingleArticle).Methods("PUT")
 	// finally, instead of passing in nil, we want
 	// to pass in our newly created router as the second
 	// argument
@@ -92,6 +93,26 @@ func returnSingleArticle(w http.ResponseWriter, r *http.Request) {
 		if article.Id == key {
 			json.NewEncoder(w).Encode(article)
 		}
+	}
+}
+
+func updateSingleArticle(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("sadasdasdadas")
+	vars := mux.Vars(r)
+	key := vars["id"]
+
+	reqBody, _ := ioutil.ReadAll(r.Body)
+	var article Article
+	json.Unmarshal(reqBody, &article)
+	index := 0
+	for _, currentArticle := range Articles {
+		if currentArticle.Id == key {
+			Articles[index].Title = article.Title
+			Articles[index].Desc = article.Desc
+			Articles[index].Content = article.Content
+			json.NewEncoder(w).Encode(Articles[index])
+		}
+		index++
 	}
 }
 
