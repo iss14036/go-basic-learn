@@ -8,7 +8,6 @@ build:
   stage: build
   script:
     - export GOPATH="${HOME}/.go"
-    - export GOROOT="$(brew --prefix golang)/libexec"
     - export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
     - test -d "${GOPATH}" || mkdir "${GOPATH}"
     - go build
