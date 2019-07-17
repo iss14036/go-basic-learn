@@ -97,7 +97,6 @@ func returnSingleArticle(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateSingleArticle(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("sadasdasdadas")
 	vars := mux.Vars(r)
 	key := vars["id"]
 
