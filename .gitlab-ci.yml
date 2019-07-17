@@ -7,7 +7,5 @@ stages:
 build:
   stage: build
   script:
-    - export GOPATH="${HOME}/.go"
-    - export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
-    - test -d "${GOPATH}" || mkdir "${GOPATH}"
+    - go get -u github.com/gorilla/mux
     - go build
