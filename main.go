@@ -16,6 +16,8 @@ import (
 // that we can then populate in our main function
 // to simulate a database
 var Articles []Article
+var db *sql.DB
+var err error
 
 type Article struct {
 	Id      string `json:"Id"`
@@ -60,6 +62,16 @@ func createNewArticle(w http.ResponseWriter, r *http.Request) {
 	// update our global Articles array to include
 	// our new Article
 	Articles = append(Articles, article)
+
+	query := "INSERT INTO article VALUES(?,?,?,?)"
+	insert, err := db.Query(query, article.Id, article.Title, article.Desc, article.Content)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer insert.Close()
 
 	json.NewEncoder(w).Encode(article)
 }
@@ -118,7 +130,7 @@ func updateSingleArticle(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	db, err := sql.Open("mysql",
+	db, err = sql.Open("mysql",
 		"root:@tcp(127.0.0.1:3306)/go-learn-basic")
 	if err != nil {
 		log.Fatal(err)
