@@ -1,12 +1,14 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 )
 
@@ -116,6 +118,13 @@ func updateSingleArticle(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	db, err := sql.Open("mysql",
+		"root:@tcp(127.0.0.1:3306)/go-learn-basic")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
 	fmt.Println("Rest API v2.0 - Mux Routers")
 	Articles = []Article{
 		Article{Id: "1", Title: "Hello", Desc: "Article Description", Content: "Article Content"},
