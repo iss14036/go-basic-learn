@@ -35,10 +35,21 @@ brew install go
 
 ```
 
+If you have different OS. you can run all of the dependencies with docker. So just install docker from [here](https://docs.docker.com/install/)
+
 ## How to use
 You can run the program by running this command at terminal :
 ```
 go run main.go
+```
+
+if you using docker you can run by this command :
+```
+sh run_go
+```
+And for turn off the program by docker you can run this command :
+```
+sh shut_go
 ```
 
 ## List of End point
