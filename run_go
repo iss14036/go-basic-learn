@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+docker build --tag app-golang:latest .
+
+docker container create --name app1 -p 10000:10000 app-golang:latest
+
+docker container start app1

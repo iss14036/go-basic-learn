@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+docker container stop app1
+
+docker rm app1
