@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
@@ -131,7 +132,7 @@ func updateSingleArticle(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	db, err = sql.Open("mysql",
-		"root:@tcp(127.0.0.1:3306)/go-learn-basic")
+		"root:@tcp("+os.Getenv("HOST_MYSQL")+":"+os.Getenv("PORT_MYSQL")+")/golearnbasic")
 	if err != nil {
 		log.Fatal(err)
 	}
