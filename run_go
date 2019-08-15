@@ -2,6 +2,12 @@
 
 docker build --tag app-golang:latest .
 
-docker container create --name app1 -p 10000:10000 app-golang:latest
+docker container create --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:latest
 
-docker container start app1
+docker container create --name app1 -p 10000:10000 -e HOST_MYSQL=mysql -e PORT_MYSQL=3306 app-golang:latest
+
+docker network create link_aja
+docker network connect link_aja mysql
+docker network connect link_aja app1
+
+docker container start app1 mysql

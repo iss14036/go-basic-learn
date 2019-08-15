@@ -47,6 +47,25 @@ if you using docker you can run by this command :
 ```
 sh run_go
 ```
+
+after you've done with the docker or the local runnig, first of all you have to make the db :
+- for docker connection you can connect mysql by this command :
+```
+mysql -P 3306 --protocol=tcp -u root -p
+```
+
+And after that you can create the DB and make the table :
+```
+CREATE DATABASE golearnbasic;
+USE golearnbasic;
+CREATE TABLE article (
+	id varchar(100),
+	title varchar(100),
+	decription varchar(100),
+	content varchar(100)
+);
+```
+
 And for turn off the program by docker you can run this command :
 ```
 sh shut_go
