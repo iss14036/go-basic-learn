@@ -7,5 +7,6 @@ stages:
 build:
   stage: build
   script:
+    - go get github.com/go-sql-driver/mysql
     - go get -u github.com/gorilla/mux
     - go build
