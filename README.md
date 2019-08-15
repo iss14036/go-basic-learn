@@ -44,6 +44,11 @@ go run main.go
 ```
 
 if you using docker you can run by this command :
+- Pulling the DB first :
+```
+docker pull mysql
+```
+- Then you can run the shell script
 ```
 sh run_go
 ```
