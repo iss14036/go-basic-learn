@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    networks:
+      - link_aja
+  app1:
+    container_name: app1
+    image: app-golang:latest
+    ports:
+      - 10000:10000
+    depends_on:
+      - mysql
+    environment:
+      - HOST_MYSQL=mysql
+      - PORT_MYSQL=3306
+    networks:
+      - link_aja
+
+networks:
+  link_aja:
+    name: link_aja
